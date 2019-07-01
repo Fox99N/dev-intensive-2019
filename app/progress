@@ -98,7 +98,7 @@ User.Builder().id(s)
 .lastName(s)
 .avatar(s)
 .rating(n)
-.respect(n)
+.respect(n)c
 .lastVisit(d)
 .isOnline(b)
 .build() должен вернуть объект User

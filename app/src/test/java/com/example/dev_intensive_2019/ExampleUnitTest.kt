@@ -62,4 +62,11 @@ class ExampleUnitTest {
         Utils.toInitials("Hokf", "Juyeof")
 
     }
+    @Test
+    fun test_transliterate(){
+        Utils.transliteration("Ялу туги")
+        Utils.transliteration("Тобби")
+        Utils.transliteration("Фредди Шлор")
+
+    }
 }
