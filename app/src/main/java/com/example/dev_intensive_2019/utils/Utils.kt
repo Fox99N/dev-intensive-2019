@@ -3,7 +3,6 @@ package com.example.dev_intensive_2019.utils
 import android.os.Build
 import android.support.annotation.RequiresApi
 import java.io.File
-import java.lang.StringBuilder
 import java.nio.file.Files
 
 
@@ -26,14 +25,20 @@ object Utils {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun transliteration(fullName: String?): String {
-        var arrayForRead = readFileLine()
+    fun transliteration(fullName: String): String {
+        val arrayForRead = readFileLine()
         var translatedString = StringBuilder()
-        val charList: CharArray? = fullName?.toCharArray()
-        if (charList != null) {
-            for(char in charList){
-                translatedString.append(arrayForRead.get(char.toString()))
+        val charList: CharArray = fullName.toCharArray()
+        for (char in charList) {
+            if (char.isUpperCase()) {
+                var newString = arrayForRead[char.toLowerCase().toString()]
+                if (newString != null) {
+                    translatedString.append(newString.toUpperCase())
+                }
+            } else {
+                translatedString.append(arrayForRead[char.toString()])
             }
+
         }
         println(translatedString.toString())
         return translatedString.toString()
@@ -45,9 +50,14 @@ object Utils {
             it.replace("\"", " ")
                 .replace(" ", "")
                 .replace(",", "")
-        }.filter { it.isNotEmpty() }.associate {  val (left, right) = it.split(":")
+        }.filter { it.isNotEmpty() }.associate {
+            val (left, right) = it.split(":")
             left to right
         }
-           return  mapTruncated
+        println(mapTruncated)
+        return mapTruncated
     }
 }
+
+
+
