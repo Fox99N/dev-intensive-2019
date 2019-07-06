@@ -78,14 +78,14 @@ class ExampleUnitTest {
 
     @Test
     fun test_humanizeDiff() {
-            println(Date().humanizeDiff(Date().add(34, TimesUnits.SECOND)))
-            println(Date().humanizeDiff(Date().add(-20, TimesUnits.DAY)))
-            println(Date().humanizeDiff(Date().add(-60, TimesUnits.SECOND)))
+//            println(Date().humanizeDiff(Date().add(34, TimesUnits.SECOND)))
+//            println( Date().humanizeDiff(Date().add(-60, TimesUnits.SECOND)))
+//            println(Date().humanizeDiff(Date().add(-5, TimesUnits.MINUTE)))
             assertEquals("через несколько секунд", Date().humanizeDiff(Date().add(34, TimesUnits.SECOND)))
-            assertEquals("минуту назад", Date().humanizeDiff(Date().add(-60, TimesUnits.SECOND))) //FIXME
+            assertEquals("минуту назад", Date().humanizeDiff(Date().add(-60, TimesUnits.SECOND)))
             assertEquals("5 минут назад", Date().humanizeDiff(Date().add(-5, TimesUnits.MINUTE)))
             assertEquals("20 дней назад", Date().humanizeDiff(Date().add(-20, TimesUnits.DAY)))
-            assertEquals("90 дней назад", Date().humanizeDiff(Date().add(-3, TimesUnits.MONTH)))
+            assertEquals("90 дней назад", Date().humanizeDiff(Date().add(-3, TimesUnits.MONTH)))//FIXME
             assertEquals("более года назад", Date().humanizeDiff(Date().add(-6, TimesUnits.YEAR)))
             assertEquals("через несколько секунд", Date().humanizeDiff(Date().add(13, TimesUnits.SECOND)))
             assertEquals("через минуту", Date().humanizeDiff(Date().add(63, TimesUnits.SECOND)))
@@ -100,6 +100,6 @@ class ExampleUnitTest {
             assertEquals("более чем через год", Date().humanizeDiff(Date().add(400, TimesUnits.DAY)))
             assertEquals("более года назад", Date().humanizeDiff(Date().add(-400, TimesUnits.DAY)))
             assertEquals("только что", Date().humanizeDiff(Date()))
-
+//
     }
 }
