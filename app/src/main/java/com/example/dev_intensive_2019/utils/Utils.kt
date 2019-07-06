@@ -30,15 +30,18 @@ object Utils {
         var translatedString = StringBuilder()
         val charList: CharArray = fullName.toCharArray()
         for (char in charList) {
+            if(char.isWhitespace()){
+                translatedString.append(char.toString())
+            }
             if (char.isUpperCase()) {
-                var newString = arrayForRead[char.toLowerCase().toString()]
+                val newString = arrayForRead[char.toLowerCase().toString()]
                 if (newString != null) {
-                    translatedString.append(newString.toUpperCase())
+                    translatedString.append(newString.capitalize())
                 }
-            } else {
+            }
+            else if(char.isLowerCase()){
                 translatedString.append(arrayForRead[char.toString()])
             }
-
         }
         println(translatedString.toString())
         return translatedString.toString()
@@ -47,7 +50,7 @@ object Utils {
     @RequiresApi(Build.VERSION_CODES.O)
     fun readFileLine(): Map<String, String> {
         var mapTruncated = Files.readAllLines(File("latin_translate").toPath()).map {
-            it.replace("\"", " ")
+            it.replace("\"", "")
                 .replace(" ", "")
                 .replace(",", "")
         }.filter { it.isNotEmpty() }.associate {

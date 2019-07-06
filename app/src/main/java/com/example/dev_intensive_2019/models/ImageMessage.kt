@@ -10,6 +10,6 @@ import java.util.*
             isIncoming: Boolean = false,
             date: Date = Date(),
             var image: String?) : BaseMessage(id, from, chat, isIncoming, date) {
-        override fun formatMessage(): String = "id: $id ${from?.firstName} ${if(isIncoming) "получил" else "отправил"} сообщение \"$image\" ${date.humanizeDiff()}"
+        override fun formatMessage(): String = "id: $id ${from?.firstName} ${if(isIncoming) "получил" else "отправил"} сообщение \"$image\" ${date.humanizeDiff(date)}"
 
     }

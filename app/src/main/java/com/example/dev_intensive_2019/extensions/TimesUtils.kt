@@ -4,5 +4,7 @@ enum class TimesUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY,
+    MONTH,
+    YEAR
 }
