@@ -19,17 +19,17 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     return dateFormat.format(this)
 }
 
-fun Date.humanizeDiff(date: Date): String? {
-    println("date = $date and dateTime - ${date.time}")
+fun Date.humanizeDiff(): String? {
+    println("date =  and dateTime - ${Date().time}")
     val currentTime: Long = System.currentTimeMillis()
-    var delta: Long = abs((currentTime - date.time))
-    println("$delta + current Time = $currentTime + DateaNEW = ${date}  DATE TIME = ${date.time}")
+    var delta: Long = abs((currentTime - Date().time))
+    println("$delta + current Time = $currentTime + DateaNEW = ${Date()}  DATE TIME = ${Date().time}")
     var MINUTES: Long = delta / 1000 / 60
     var HOURS = MINUTES / 60
     var DAYS = ((HOURS / 24).toDouble()).roundToLong()
     var MONTHS = ((DAYS / 30).toDouble()).roundToLong()
     var YEARS = DAYS / 365
-    if (currentTime > date.time) {
+    if (currentTime > Date().time) {
         println(delta)
         return when {
             delta < MINUTE -> "несколько секунд назад"
@@ -47,7 +47,7 @@ fun Date.humanizeDiff(date: Date): String? {
             else -> " некорректный интервал 1"
         }
     }
-    if (currentTime < date.time) {
+    if (currentTime < Date().time) {
         println(delta)
         return when {
             delta < MINUTE -> "через несколько секунд"
@@ -65,22 +65,22 @@ fun Date.humanizeDiff(date: Date): String? {
             else -> " некорректный интервал 2"
 
         }
-    } else if (currentTime == date.time) {
+    } else if (currentTime == Date().time) {
         return "только что"
     }
     return null
 }
 
-fun Date.add(value: Int, units: TimesUnits = TimesUnits.SECOND): Date {
+fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
     var time = this.time
 
     time += when (units) {
-        TimesUnits.SECOND -> value * SECOND
-        TimesUnits.MINUTE -> value * MINUTE
-        TimesUnits.HOUR -> value * HOUR
-        TimesUnits.DAY -> value * DAY
-        TimesUnits.MONTH -> value * MONTH
-        TimesUnits.YEAR -> value * YEAR
+        TimeUnits.SECOND -> value * SECOND
+        TimeUnits.MINUTE -> value * MINUTE
+        TimeUnits.HOUR -> value * HOUR
+        TimeUnits.DAY -> value * DAY
+        TimeUnits.MONTH -> value * MONTH
+        TimeUnits.YEAR -> value * YEAR
     }
     this.time = time
     return this
