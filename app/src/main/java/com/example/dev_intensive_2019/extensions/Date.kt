@@ -3,6 +3,7 @@ package com.example.dev_intensive_2019.extensions
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.roundToLong
 
 
 const val SECOND = 1000L
@@ -21,47 +22,46 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
 fun Date.humanizeDiff(date: Date): String? {
     println("date = $date and dateTime - ${date.time}")
     val currentTime: Long = System.currentTimeMillis()
-    var currentDate: Int = abs((currentTime - date.time).toInt())
-    println("$currentDate + current Time = $currentTime + DateaNEW = ${date}  DATE TIME = ${date.time}")
-    var MINUTES: Int = currentDate / SECOND.toInt() / 60
+    var delta: Long = abs((currentTime - date.time))
+    println("$delta + current Time = $currentTime + DateaNEW = ${date}  DATE TIME = ${date.time}")
+    var MINUTES: Long = delta / 1000 / 60
     var HOURS = MINUTES / 60
-    var DAYS = HOURS / 24
-    var MONTHS = DAYS / 30
+    var DAYS = ((HOURS / 24).toDouble()).roundToLong()
+    var MONTHS = ((DAYS / 30).toDouble()).roundToLong()
     var YEARS = DAYS / 365
     if (currentTime > date.time) {
-        println(currentDate)
+        println(delta)
         return when {
-            currentDate < MINUTE -> "несколько секунд назад"
-            MINUTES == 1 -> "минуту назад"
-            (currentDate in (MINUTE + 1)..(HOUR - 1)) && (currentDate % 10) == 0 || (currentDate % 10) >= 5 -> "$MINUTES минут назад"
-            (currentDate in (MINUTE + 1)..(HOUR - 1)) && (currentDate % 10) > 1 || (currentDate % 10) > 5 -> "$MINUTES минуты назад"
-            (currentDate in (HOUR + 1)..(DAY - 1)) && (currentDate % 10) > 1 || (currentDate % 10) > 5 -> "$HOURS часа назад"
-            (currentDate in (HOUR + 1)..(DAY - 1)) && (currentDate % 10) == 0 || (currentDate % 10) >= 5 -> "$HOURS часов назад"
-            HOURS == 1 -> "час назад"
-            currentDate in (DAY + 1)..(YEAR - 1) && (currentDate % 10) == 0 || (currentDate % 10) >= 5 -> "$DAYS дней назад"
-            currentDate in (DAY + 1)..(YEAR - 1) && (currentDate % 10) > 1 || (currentDate % 10) > 5 -> "$DAYS дня назад"
-            DAYS == 1 -> "день назад"
-            currentDate > YEAR && (currentDate % 10) == 0 || (currentDate % 10) >= 5 -> "более года назад"
-            YEARS == 1 -> "год назад"
+            delta < MINUTE -> "несколько секунд назад"
+            MINUTES == 1L -> "минуту назад"
+            (delta in (MINUTE + 1) until HOUR) && ((MINUTES % 10) == 0L || (MINUTES % 10) >= 5) -> "$MINUTES минут назад"
+            (delta in (MINUTE + 1) until HOUR) && ((MINUTES % 10) > 1 || (MINUTES % 10) > 5) -> "$MINUTES минуты назад"
+            (delta in (HOUR + 1).. (DAY- HOUR)) && ((HOURS % 10) > 1 || (HOURS % 10) > 5) -> "$HOURS часа назад"
+            (delta in (HOUR + 1).. (DAY- HOUR))  && (HOURS % 10) == 0L || (HOURS % 10) >= 5 -> "$HOURS часов назад"
+            HOURS == 1L -> "час назад"
+            delta in (DAY + 1) until YEAR && (DAYS % 10) == 0L || (DAYS % 10) >= 5 -> "$DAYS дней назад"
+            delta in (DAY + 1) until YEAR && (DAYS % 10) > 1 || (DAYS % 10) > 5 -> "$DAYS дня назад"
+            DAYS == 1L -> "день назад"
+            delta > YEAR -> "более года назад"
+            YEARS == 1L -> "год назад"
             else -> " некорректный интервал 1"
         }
     }
     if (currentTime < date.time) {
-        println(currentDate)
+        println(delta)
         return when {
-            currentDate < MINUTE -> "через несколько секунд"
-            MINUTES == 1 -> "через минуту"
-            (currentDate in (MINUTE + 1)..(HOUR - 1)) && (currentDate % 10) == 0 || (currentDate % 10) >= 5 -> "через $MINUTES минут"
-            (currentDate in (MINUTE + 1)..(HOUR - 1)) && (currentDate % 10) > 1 || (currentDate % 10) > 5 -> "через $MINUTES минуты"
-            (currentDate in (HOUR + 1)..(DAY - 1)) && (currentDate % 10) > 1 || (currentDate % 10) > 5 -> "через $HOURS часа"
-            (currentDate in (HOUR + 1)..(DAY - 1)) && (currentDate % 10) == 0 || (currentDate % 10) >= 5-> "через $HOURS часов"
-            HOURS == 1 -> "через час"
-            (currentDate in (HOUR + 1)..(DAY - 1)) && (currentDate % 10) == 0 || (currentDate % 10) >= 5 -> "через $DAYS дней"
-            (currentDate in (HOUR + 1)..(DAY - 1)) && (currentDate % 10) > 1 || (currentDate % 10) > 5 -> "через $DAYS дня"
-            DAYS == 1 -> "через день"
-            currentDate > YEAR && (currentDate % 10) == 0 || (currentDate % 10) >= 5 -> "более чем через год"
-            currentDate.toLong() == YEAR -> "через $YEARS год"
-
+            delta < MINUTE -> "через несколько секунд"
+            MINUTES == 1L -> "через минуту"
+            (delta in (MINUTE + 1) until HOUR) && (delta % 10) == 0L || (delta % 10) >= 5 -> "через $MINUTES минут"
+            (delta in (MINUTE + 1) until HOUR) && (delta % 10) > 1 || (delta % 10) > 5 -> "через $MINUTES минуты"
+            (delta in (HOUR + 1).. (DAY- HOUR))  && (HOURS % 10) > 1 || (HOURS % 10) > 5 -> "через $HOURS часа"
+            (delta in (HOUR + 1).. (DAY- HOUR))  && (HOURS % 10) == 0L || (HOURS % 10) >= 5 -> "через $HOURS часов"
+            HOURS == 1L -> "час назад"
+            delta in (DAY + 1) until YEAR && (DAYS % 10) == 0L || (DAYS % 10) >= 5 -> "через $DAYS дней"
+            delta in (DAY + 1) until YEAR && (DAYS % 10) > 1 || (DAYS % 10) > 5 -> "через $DAYS дня"
+            DAYS == 1L -> "через день"
+            delta > YEAR && (delta % 10) == 0L || (delta % 10) >= 5 -> "более чем через год"
+            delta == YEAR -> "через $YEARS год"
             else -> " некорректный интервал 2"
 
         }
