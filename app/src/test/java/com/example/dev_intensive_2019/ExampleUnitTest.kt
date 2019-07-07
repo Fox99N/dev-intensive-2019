@@ -90,7 +90,16 @@ class ExampleUnitTest {
     fun builder_pattern(){
         val user4 = User.Builder("id_uder", "Skr", "YURR", "avatarrr", 2, 3, Date().add(3, TimeUnits.DAY), true)
             .build()
-        println(user4.toString())
+        val user5 = User.Builder()
+            .id("EUur")
+            .firstName("Tom")
+            .lastName("Rwfk")
+            .avatar("some avater")
+            .raiting(2)
+            .respect(2)
+            .lastVisit(Date().add(-4, TimeUnits.DAY))
+            .isOnline(false)
+        println(user5.toString())
     }
 }
 
